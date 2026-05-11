@@ -1,0 +1,77 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: makani_cosmetique_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: makani_user
+      POSTGRES_PASSWORD: makani_password
+      POSTGRES_DB: makani_cosmetique
+    ports:
+      - '5435:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U makani_user -d makani_cosmetique']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: makani_cosmetique_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@makani-cosmetique.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - '5052:80'
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: development
+    container_name: makani_cosmetique_api
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+    ports:
+      - '3004:3004'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/src
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    container_name: makani_cosmetique_frontend
+    restart: unless-stopped
+    environment:
+      REACT_APP_API_URL: http://localhost:3004/api
+      CHOKIDAR_USEPOLLING: 'true'
+      WATCHPACK_POLLING: 'true'
+      BROWSER: 'none'
+      WDS_SOCKET_PORT: '0'
+    ports:
+      - '3003:3000'
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+
+volumes:
+  postgres_data:
+  pgadmin_data:

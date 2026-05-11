@@ -1,0 +1,81 @@
+.empty {
+  padding: 2.5rem;
+  text-align: center;
+  color: #666;
+  background: #fafaf8;
+  border-radius: 12px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #f0ebe4;
+  border-radius: 12px;
+}
+
+.table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+
+  thead th {
+    background: #fafaf8;
+    text-align: left;
+    padding: 0.8rem 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #f0ebe4;
+  }
+
+  tbody td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f5f1ea;
+    color: #444;
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  strong { display: block; color: #1a1a1a; font-size: 0.9rem; }
+}
+
+.email {
+  display: block;
+  font-size: 0.78rem;
+  color: #888;
+  margin-top: 0.15rem;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  &.pending { background: #fef3cd; color: #856404; }
+  &.cancelled { background: #f0ebe4; color: #555; }
+  &.executed { background: #e6efe9; color: #C44D3A; }
+}
+
+.reason {
+  font-style: italic;
+  color: #666;
+  font-size: 0.85rem;
+  max-width: 280px;
+}
+
+.note {
+  margin: 1rem 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: #666;
+}

@@ -1,0 +1,178 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.page {
+  @include mag-container;
+  padding-block: clamp(3rem, 6vw, 5rem);
+  color: $color-secondary;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid $color-secondary;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+
+  &::before {
+    content: "№ 08";
+    background: $color-secondary;
+    color: $color-bg;
+    padding: 0.3rem 0.55rem;
+    border-radius: $radius-full;
+    letter-spacing: 0.18em;
+  }
+}
+
+.title {
+  @include mag-title(clamp(2.6rem, 7vw, 5.4rem));
+  margin: 0;
+
+  em {
+    font-style: italic;
+    color: $color-primary;
+  }
+}
+
+.subtitle {
+  font-family: $font-body;
+  color: $color-text-muted;
+  max-width: 50ch;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.alphabet {
+  position: sticky;
+  top: 96px;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+  background: rgba(251, 246, 239, 0.94);
+  backdrop-filter: blur(10px);
+  padding: 0.85rem;
+  border-radius: $radius-full;
+  border: 1px solid $color-secondary;
+  margin-bottom: 2.5rem;
+}
+
+.letter {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  font-family: $font-mono;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: $color-secondary;
+  text-decoration: none;
+  transition: background-color $transition-base, color $transition-base;
+
+  &:hover {
+    background: $color-secondary;
+    color: $color-accent;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  h2 {
+    @include mag-title(clamp(2rem, 4vw, 3rem));
+    font-style: italic;
+    margin: 0;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid $color-border-strong;
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    color: $color-secondary;
+
+    &::before {
+      content: "№";
+      font-family: $font-mono;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      color: $color-accent-dark;
+      font-style: normal;
+      font-weight: 700;
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.85rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  padding: 1.1rem 1.3rem;
+  text-decoration: none;
+  color: $color-secondary;
+  transition: background-color $transition-base, border-color $transition-base, transform $transition-base;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: $color-secondary;
+    background: $color-bg-alt;
+
+    h3 {
+      color: $color-primary;
+      font-style: italic;
+    }
+  }
+
+  h3 {
+    font-family: $font-heading;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin: 0;
+    color: $color-secondary;
+    transition: color $transition-base, font-style $transition-base;
+  }
+}
+
+.count {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  font-weight: 700;
+}

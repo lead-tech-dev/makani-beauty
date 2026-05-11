@@ -1,0 +1,76 @@
+// Makani Cosmétique — Design Tokens
+// Modern · Confident · Warm-earth · Pan-African vibrant
+
+// Colors
+$color-primary: #C44D3A;        // Terracotta principal — l opposé du forest-green
+$color-primary-light: #D86852;
+$color-primary-dark: #9E3A2C;
+
+$color-secondary: #231B14;      // Ink (presque noir, chaud)
+$color-secondary-light: #3D2E22;
+$color-secondary-dark: #14100B;
+
+$color-accent: #E6A750;         // Ochre doré (accent chaud)
+$color-accent-light: #F0BE74;
+$color-accent-dark: #B7843E;
+
+$color-bg: #FBF6EF;             // Cream chaud
+$color-bg-alt: #F4ECDF;         // Cream plus saturé
+$color-surface: #FFFFFF;
+
+$color-text: #231B14;
+$color-text-muted: #6B5A4A;
+$color-text-inverse: #FBF6EF;
+
+$color-border: #E5DCC9;
+$color-border-strong: #C9BCA1;
+
+$color-success: #4F7A3F;
+$color-error: #C0392B;
+
+// Typography — chasse total contraste avec makani-cosmetique
+// Display: Bricolage Grotesque (modern, slightly bouncy, confident)
+// Body: Inter (clean, geometric, neutral)
+$font-heading: 'Bricolage Grotesque', 'Inter', system-ui, -apple-system, sans-serif;
+$font-body: 'Inter', system-ui, -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
+
+// Spacing scale
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 1rem;
+$space-lg: 2rem;
+$space-xl: 4rem;
+$space-xxl: 8rem;
+
+// Radii — un peu moins arrondi que makani-cosmetique (look moins boutique-organique, plus éditorial)
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 18px;
+$radius-full: 9999px;
+
+// Shadows — teinte terracotta plutôt que green
+$shadow-sm: 0 1px 2px rgba(35, 27, 20, 0.06);
+$shadow-md: 0 6px 20px rgba(196, 77, 58, 0.10);
+$shadow-lg: 0 18px 44px rgba(35, 27, 20, 0.14);
+
+// Layout
+$container-max: 1400px;
+$container-narrow: 1100px;
+
+// Breakpoints
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+// Transitions
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 0.3s $ease-out;
+$transition-slow: 0.6s $ease-out;
+
+// Z-indexes
+$z-header: 50;
+$z-drawer: 100;
+$z-modal: 200;

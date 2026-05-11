@@ -1,0 +1,70 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/magazine" as *;
+
+.mdTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-family: $font-body;
+  font-size: 0.92rem;
+
+  th,
+  td {
+    padding: 0.65rem 0.85rem;
+    border: 1px solid $color-border;
+    text-align: left;
+    color: $color-secondary;
+  }
+
+  th {
+    background: $color-bg-alt;
+    font-family: $font-mono;
+    font-weight: 700;
+    color: $color-secondary;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+}
+
+.cookieAction {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.2rem 1.3rem;
+  margin: 1.4rem 0 0.85rem;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  border-left: 4px solid $color-primary;
+  border-radius: $radius-md;
+}
+
+.manageBtn {
+  align-self: flex-start;
+  background: $color-secondary;
+  color: $color-bg;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-full;
+  padding: 0.6rem 1.1rem;
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+.status {
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: $color-text-muted;
+  font-weight: 600;
+}

@@ -1,0 +1,129 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
+  background: $color-bg;
+  color: $color-secondary;
+}
+
+.card {
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  background: $color-bg;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-lg;
+  padding: clamp(2.2rem, 5vw, 3rem) clamp(1.6rem, 4vw, 2.4rem);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 4px;
+    background: $color-primary;
+    border-radius: 0 0 4px 4px;
+  }
+
+  h1 {
+    @include mag-title(clamp(1.8rem, 3.6vw, 2.6rem));
+    font-style: italic;
+    margin: 1rem 0 0.5rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    font-family: $font-body;
+    color: $color-text-muted;
+    line-height: 1.65;
+  }
+}
+
+.successIcon {
+  color: $color-success;
+}
+
+.errorIcon {
+  color: $color-error;
+}
+
+.codeIntro {
+  margin-top: 1.4rem !important;
+  font-family: $font-body;
+
+  strong {
+    color: $color-primary;
+  }
+}
+
+.codeBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.9rem 1.2rem;
+  background: $color-bg-alt;
+  border: 2px dashed $color-primary;
+  border-radius: $radius-md;
+  margin: 0.9rem auto;
+
+  code {
+    font-family: $font-mono;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: $color-primary;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.8rem;
+    background: $color-primary;
+    color: $color-bg;
+    border: none;
+    border-radius: $radius-full;
+    font-family: $font-body;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background: $color-primary-dark;
+    }
+  }
+}
+
+.codeNote {
+  font-family: $font-body;
+  font-size: 0.82rem !important;
+  color: $color-text-muted !important;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1.6rem;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  @include mag-cta;
+}
+
+.btnSecondary {
+  @include mag-cta-ghost;
+}

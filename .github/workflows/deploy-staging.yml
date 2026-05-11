@@ -1,0 +1,71 @@
+name: Deploy → Staging
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: staging
+      # Override via GitHub var STAGING_FRONTEND_URL once the domain or platform subdomain is known.
+      url: ${{ vars.STAGING_FRONTEND_URL || 'https://staging.makani-cosmetique.com' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Frontend → Vercel preview/staging deployment
+      - name: Deploy frontend to Vercel
+        if: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npx --yes vercel pull --yes --environment=preview \
+            --token=${{ secrets.VERCEL_TOKEN }}
+          npx --yes vercel build --token=${{ secrets.VERCEL_TOKEN }}
+          npx --yes vercel deploy --prebuilt \
+            --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: frontend
+
+      # Backend → Render / Railway / Fly via webhook
+      - name: Trigger backend deploy hook (Render)
+        if: ${{ secrets.RENDER_STAGING_DEPLOY_HOOK }}
+        run: curl -fsSL -X POST "${{ secrets.RENDER_STAGING_DEPLOY_HOOK }}"
+
+      - name: Wait for backend health
+        env:
+          BACKEND_HEALTH_URL: ${{ vars.STAGING_BACKEND_HEALTH_URL || 'https://api-staging.makani-cosmetique.com/health' }}
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsSL "$BACKEND_HEALTH_URL" > /dev/null 2>&1; then
+              echo "Backend healthy at $BACKEND_HEALTH_URL"
+              exit 0
+            fi
+            echo "Waiting for backend ($BACKEND_HEALTH_URL)... ($i/30)"
+            sleep 10
+          done
+          echo "::warning::Backend did not become healthy within 5 minutes at $BACKEND_HEALTH_URL"
+
+      - name: Smoke test backend endpoints
+        env:
+          BACKEND_HEALTH_URL: ${{ vars.STAGING_BACKEND_HEALTH_URL || 'https://api-staging.makani-cosmetique.com/health' }}
+        run: |
+          BASE_URL="${BACKEND_HEALTH_URL%/health}"
+          chmod +x scripts/smoke.sh
+          scripts/smoke.sh "$BASE_URL"
+
+      # Sentry source maps + release tracking
+      - uses: getsentry/action-release@v1
+        if: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: makani-cosmetique
+        with:
+          environment: staging
+          version: ${{ github.sha }}

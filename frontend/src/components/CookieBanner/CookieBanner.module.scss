@@ -1,0 +1,125 @@
+.banner {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: #ffffff;
+  border: 1px solid #e8e2da;
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  animation: slideUp 0.25s ease-out;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f0e8d8;
+  color: #C44D3A;
+  flex-shrink: 0;
+}
+
+.text {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #555;
+
+  strong {
+    display: block;
+    color: #1a1a1a;
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  p { margin: 0; }
+  a { color: #C44D3A; text-decoration: underline; }
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+%btnBase {
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.linkBtn {
+  @extend %btnBase;
+  background: none;
+  border: none;
+  color: #C44D3A;
+  text-decoration: underline;
+  padding: 0.55rem 0.5rem;
+
+  &:hover { color: #9E3A2C; }
+}
+
+.secondary {
+  @extend %btnBase;
+  background: #fff;
+  border: 1px solid #d8d3cc;
+  color: #1a1a1a;
+
+  &:hover { background: #f7f4ef; }
+}
+
+.primary {
+  @extend %btnBase;
+  background: #C44D3A;
+  border: 1px solid #C44D3A;
+  color: #fff;
+
+  &:hover { background: #9E3A2C; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 880px) {
+  .banner {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .icon { display: none; }
+
+  .actions {
+    justify-content: flex-end;
+  }
+
+  .primary, .secondary { flex: 1; text-align: center; }
+}

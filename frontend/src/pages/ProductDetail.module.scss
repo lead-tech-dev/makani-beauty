@@ -1,0 +1,659 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.page {
+  background: $color-bg;
+  color: $color-secondary;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+// ── Breadcrumb ───────────────────────────────────────────────────
+.breadcrumb {
+  @include mag-container;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.4rem clamp(1.25rem, 5vw, 3rem);
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+
+  a {
+    color: $color-secondary;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  span:not([aria-current]) {
+    opacity: 0.5;
+  }
+
+  span[aria-current] {
+    color: $color-primary;
+    font-style: italic;
+    font-family: $font-heading;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 0.85rem;
+  }
+}
+
+// ── Layout (gallery + info) ──────────────────────────────────────
+.layout {
+  @include mag-container;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+  padding-top: 1rem;
+
+  @include breakpoint-down($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+// ── Gallery (arch portrait) ──────────────────────────────────────
+.gallery {
+  position: sticky;
+  top: clamp(1rem, 6vw, 2.5rem);
+
+  @include breakpoint-down($bp-md) {
+    position: static;
+  }
+}
+
+.archStack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5.2;
+}
+
+.archShadow {
+  position: absolute;
+  top: 1.4rem;
+  left: 1.4rem;
+  right: -0.5rem;
+  bottom: -0.5rem;
+  border-radius: 50% 50% 8px 8px / 35% 35% 8px 8px;
+  background: $color-primary;
+  z-index: 0;
+}
+
+.archImg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 50% 8px 8px / 35% 35% 8px 8px;
+  overflow: hidden;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  box-shadow: $shadow-lg;
+
+  > * {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
+.bestBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background: $color-accent;
+  color: $color-secondary;
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transform: rotate(-3deg);
+  box-shadow: 0 4px 12px rgba(35, 27, 20, 0.18);
+}
+
+.archPlate {
+  position: absolute;
+  bottom: 1.2rem;
+  right: -1.4rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  background: $color-secondary;
+  color: $color-bg;
+  transform: rotate(8deg);
+  box-shadow: 0 6px 16px rgba(35, 27, 20, 0.24);
+
+  small {
+    font-family: $font-mono;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: $color-accent;
+  }
+
+  strong {
+    font-family: $font-heading;
+    font-weight: 800;
+    font-size: 1.8rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  @include breakpoint-down($bp-md) {
+    width: 4.5rem;
+    height: 4.5rem;
+    right: -0.5rem;
+
+    strong {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+// ── Info ─────────────────────────────────────────────────────────
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.issue {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-bg;
+  background: $color-secondary;
+  padding: 0.3rem 0.55rem;
+  border-radius: $radius-full;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: $color-accent-dark;
+}
+
+.label {
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+}
+
+.title {
+  @include mag-title(clamp(2rem, 4.5vw, 3.4rem));
+  margin: 0;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.55rem;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-full;
+  align-self: flex-start;
+}
+
+.stars {
+  display: inline-flex;
+  color: $color-accent;
+}
+
+.reviewLink {
+  font-family: $font-body;
+  font-size: 0.78rem;
+  color: $color-text-muted;
+
+  strong {
+    font-family: $font-heading;
+    font-weight: 700;
+    color: $color-secondary;
+    margin-right: 0.1rem;
+  }
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  padding-top: 0.4rem;
+  border-top: 1px solid $color-border;
+}
+
+.price {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: $color-secondary;
+}
+
+.compare {
+  font-family: $font-body;
+  font-size: 0.92rem;
+  color: $color-text-muted;
+  text-decoration: line-through;
+}
+
+.discount {
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: $color-primary;
+  color: $color-bg;
+  padding: 0.3rem 0.55rem;
+  border-radius: $radius-full;
+}
+
+.stockOut,
+.stockAlert {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.55rem 0.85rem;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  border-radius: $radius-md;
+  align-self: flex-start;
+}
+
+.stockOut {
+  background: rgba(192, 57, 43, 0.08);
+  color: $color-error;
+  border: 1px solid rgba(192, 57, 43, 0.3);
+}
+
+.stockAlert {
+  background: $color-bg-alt;
+  color: $color-accent-dark;
+  border: 1px solid $color-accent;
+  font-weight: 500;
+
+  strong {
+    font-weight: 700;
+    color: $color-secondary;
+  }
+}
+
+// ── Variants ─────────────────────────────────────────────────────
+.variants {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid $color-border;
+}
+
+.variantsLabel {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+}
+
+.variantPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.variantPill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  background: $color-bg;
+  color: $color-secondary;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-full;
+  font-family: $font-body;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background-color $transition-base, color $transition-base, border-color $transition-base;
+
+  small {
+    font-family: $font-mono;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: $color-text-muted;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $color-secondary;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: line-through;
+  }
+}
+
+.variantPillActive {
+  background: $color-secondary;
+  color: $color-bg;
+  border-color: $color-secondary;
+
+  small {
+    color: $color-accent;
+  }
+
+  &:hover:not(:disabled) {
+    background: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+.variantPillOut {
+  // already handled via :disabled — kept for clarity
+}
+
+.shortDesc {
+  font-family: $font-body;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: $color-text-muted;
+  margin: 0;
+  @include mag-drop-initial;
+}
+
+// ── Action row ───────────────────────────────────────────────────
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.3rem 0.4rem;
+  background: $color-bg;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-full;
+
+  button {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: $color-secondary;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color $transition-base, color $transition-base;
+
+    &:hover:not(:disabled) {
+      background: $color-secondary;
+      color: $color-bg;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    font-family: $font-mono;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $color-secondary;
+    min-width: 1.5rem;
+    text-align: center;
+  }
+}
+
+.addBtn {
+  @include mag-cta;
+  flex: 1;
+  min-width: 200px;
+  justify-content: center;
+}
+
+.wishlist {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg;
+  color: $color-secondary;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: background-color $transition-base, color $transition-base, transform $transition-base;
+
+  &:hover {
+    background: $color-secondary;
+    color: $color-bg;
+    transform: translateY(-1px);
+  }
+}
+
+.wishlistActive {
+  background: $color-primary;
+  border-color: $color-primary;
+  color: $color-bg;
+
+  &:hover {
+    background: $color-primary-dark;
+    border-color: $color-primary-dark;
+  }
+}
+
+// ── Benefits ─────────────────────────────────────────────────────
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem 0 0;
+  margin: 0;
+  list-style: none;
+  border-top: 1px solid $color-border;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: $font-body;
+    font-size: 0.85rem;
+    color: $color-secondary;
+    letter-spacing: 0.02em;
+  }
+}
+
+.benefitIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  color: $color-primary;
+  flex: 0 0 auto;
+}
+
+// ── Tabs ─────────────────────────────────────────────────────────
+.tabs {
+  margin-top: 1rem;
+  border-top: 1px solid $color-secondary;
+}
+
+.tabHead {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid $color-border-strong;
+
+  button {
+    flex: 1;
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 1rem 0.85rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: $color-text-muted;
+    font-family: $font-body;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color $transition-base, border-color $transition-base;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+}
+
+.active {
+  color: $color-secondary !important;
+  border-bottom-color: $color-primary !important;
+}
+
+.tabIndex {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: $color-accent-dark;
+}
+
+.tabBody {
+  padding: 1.4rem 0 0.5rem;
+
+  p {
+    font-family: $font-body;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: $color-text-muted;
+    margin: 0;
+  }
+}
+
+.featList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    gap: 0.85rem;
+    align-items: baseline;
+    font-family: $font-body;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: $color-secondary;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid $color-border;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.featIndex {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: $color-accent-dark;
+  flex: 0 0 1.8rem;
+}
+
+// ── Not found ────────────────────────────────────────────────────
+.notFound {
+  text-align: center;
+  padding: 8rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+
+  h1 {
+    @include mag-title(clamp(2rem, 4vw, 3rem));
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+.notFoundIssue {
+  font-family: $font-mono;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $color-bg;
+  background: $color-primary;
+  padding: 0.45rem 0.7rem;
+  border-radius: $radius-full;
+}
+
+.btn {
+  @include mag-cta;
+}

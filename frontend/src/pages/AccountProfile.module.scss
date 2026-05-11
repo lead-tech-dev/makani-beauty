@@ -1,0 +1,96 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.card {
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  &::before {
+    content: "Profil · № 01";
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    font-family: $font-mono;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-accent-dark;
+  }
+}
+
+.header {
+  margin-bottom: 1.8rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  @include mag-title(clamp(1.8rem, 3.6vw, 2.6rem));
+  font-style: italic;
+  margin: 0 0 0.4rem;
+}
+
+.sub {
+  font-family: $font-body;
+  font-size: 0.92rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @include breakpoint-down($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  dt {
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-accent-dark;
+  }
+
+  dd {
+    margin: 0;
+    font-family: $font-body;
+    color: $color-secondary;
+    font-size: 0.95rem;
+  }
+}
+
+.muted {
+  font-family: $font-heading;
+  font-style: italic;
+  color: $color-text-muted;
+}
+
+.role {
+  text-transform: capitalize;
+  font-family: $font-heading;
+  font-style: italic;
+  font-weight: 600;
+}

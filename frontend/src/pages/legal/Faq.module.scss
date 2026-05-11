@@ -1,0 +1,72 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/magazine" as *;
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item {
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  background: $color-bg;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &.open {
+    border-color: $color-primary;
+    background: $color-bg-alt;
+  }
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  background: none;
+  border: none;
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: $color-secondary;
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+
+  > svg {
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: $color-bg-alt;
+    border-radius: $radius-md;
+  }
+
+  .open & {
+    font-weight: 600;
+    color: $color-primary;
+  }
+}
+
+.answer {
+  padding: 0 1.2rem 1.1rem 2.7rem;
+
+  > p,
+  > ul,
+  > ol {
+    margin: 0 0 0.6rem;
+    font-family: $font-body;
+    font-size: 0.92rem;
+    color: $color-text-muted;
+    line-height: 1.7;
+  }
+}

@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.fullPage {
+  min-height: 60vh;
+}
+
+.ring {
+  display: inline-block;
+  border-radius: 50%;
+  border: 3px solid rgba(10, 61, 49, 0.15);
+  border-top-color: #C44D3A;
+  animation: spin 0.7s linear infinite;
+
+  &.sm { width: 20px; height: 20px; }
+  &.md { width: 36px; height: 36px; }
+  &.lg { width: 52px; height: 52px; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

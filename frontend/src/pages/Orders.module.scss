@@ -1,0 +1,202 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 1.6rem 2rem;
+  position: relative;
+
+  &::before {
+    content: "Mes commandes · № 02";
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    font-family: $font-mono;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-accent-dark;
+  }
+}
+
+.title {
+  @include mag-title(clamp(1.8rem, 3.6vw, 2.6rem));
+  font-style: italic;
+  margin: 0 0 0.4rem;
+}
+
+.sub {
+  font-family: $font-body;
+  color: $color-text-muted;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  padding: 1.25rem 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color $transition-base, transform $transition-base;
+  gap: 1rem;
+
+  &:hover {
+    border-color: $color-secondary;
+    transform: translateY(-1px);
+
+    .arrow {
+      color: $color-primary;
+      transform: translateX(3px);
+    }
+  }
+}
+
+.cardLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.icon {
+  color: $color-primary;
+  flex-shrink: 0;
+}
+
+.orderNumber {
+  display: block;
+  font-family: $font-heading;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 0.96rem;
+  letter-spacing: -0.005em;
+  color: $color-secondary;
+}
+
+.meta {
+  display: block;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  margin-top: 0.3rem;
+}
+
+.cardRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-family: $font-body;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.65rem;
+  border-radius: $radius-full;
+  white-space: nowrap;
+
+  &.pending          { background: rgba(230, 167, 80, 0.2); color: $color-accent-dark; }
+  &.confirmed        { background: rgba(196, 77, 58, 0.12); color: $color-primary-dark; }
+  &.preparing        { background: rgba(230, 167, 80, 0.3); color: $color-accent-dark; }
+  &.shipped          { background: $color-secondary; color: $color-bg; }
+  &.ready_for_pickup { background: $color-secondary; color: $color-accent; }
+  &.delivered        { background: rgba(79, 122, 63, 0.18); color: $color-success; }
+  &.returned         { background: $color-bg-alt; color: $color-text-muted; border: 1px solid $color-border-strong; }
+  &.cancelled        { background: rgba(192, 57, 43, 0.1); color: $color-error; }
+}
+
+.payBadge {
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  border: 1px solid transparent;
+
+  &.payPending  { background: rgba(230, 167, 80, 0.14); color: $color-accent-dark; border-color: rgba(230, 167, 80, 0.5); }
+  &.payPaid     { background: rgba(79, 122, 63, 0.12); color: $color-success; border-color: rgba(79, 122, 63, 0.4); }
+  &.payFailed   { background: rgba(192, 57, 43, 0.08); color: $color-error; border-color: rgba(192, 57, 43, 0.4); }
+  &.payRefunded { background: $color-bg-alt; color: $color-text-muted; border-color: $color-border-strong; }
+}
+
+.badgeStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.total {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: $color-primary;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.arrow {
+  color: $color-text-muted;
+  transition: color $transition-base, transform $transition-base;
+}
+
+.empty {
+  background: $color-bg;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  svg {
+    color: $color-text-muted;
+    margin-bottom: 1.2rem;
+  }
+
+  h3 {
+    @include mag-title(1.6rem);
+    font-style: italic;
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    font-family: $font-body;
+    color: $color-text-muted;
+    margin: 0 0 1.6rem;
+  }
+}
+
+.shopLink {
+  @include mag-cta;
+}

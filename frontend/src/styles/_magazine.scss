@@ -1,0 +1,261 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+// ──────────────────────────────────────────────────────────────────
+// Makani Magazine — shared editorial primitives
+// Use these across all surfaces to keep the publication coherent.
+// ──────────────────────────────────────────────────────────────────
+
+// Eyebrow with issue number — "№ 03 — L'édit"
+@mixin mag-eyebrow($accent: $color-accent-dark) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  .issue,
+  &::before {
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-bg;
+    background: $color-secondary;
+    padding: 0.3rem 0.55rem;
+    border-radius: $radius-full;
+  }
+
+  .label {
+    font-family: $font-body;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: $accent;
+  }
+}
+
+// Massive italic display title with terracotta emphasis
+@mixin mag-title($size: clamp(2.4rem, 5.5vw, 4.6rem)) {
+  font-family: $font-heading;
+  font-weight: 700;
+  font-size: $size;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: $color-secondary;
+
+  em {
+    font-style: italic;
+    font-weight: 700;
+    color: $color-primary;
+  }
+}
+
+// Page header layout (issue + label + title + lede + rule)
+@mixin mag-page-header {
+  position: relative;
+  padding: clamp(2.5rem, 5vw, 4.5rem) 0 clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid $color-secondary;
+
+  // Page rule on the left side
+  &::before {
+    content: "";
+    position: absolute;
+    top: 1.5rem;
+    bottom: 0;
+    left: clamp(1rem, 4vw, 2.5rem);
+    width: 1px;
+    background: $color-border-strong;
+
+    @media (max-width: $bp-md) {
+      display: none;
+    }
+  }
+}
+
+// Pill button — chunky terracotta CTA
+@mixin mag-cta($bg: $color-secondary, $color: $color-bg) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.5rem;
+  background: $bg;
+  color: $color;
+  border: 1px solid $bg;
+  border-radius: $radius-full;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color $transition-base, color $transition-base, transform $transition-base, box-shadow $transition-base;
+
+  &:hover:not(:disabled) {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-bg;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(196, 77, 58, 0.28);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  svg {
+    transition: transform $transition-base;
+  }
+
+  &:hover:not(:disabled) svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+// Ghost pill — outline + italic label
+@mixin mag-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.5rem;
+  background: transparent;
+  color: $color-secondary;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-full;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color $transition-base, color $transition-base, transform $transition-base;
+
+  &:hover:not(:disabled) {
+    background: $color-secondary;
+    color: $color-bg;
+    transform: translateY(-1px);
+  }
+}
+
+// Arch crop (image) — Makani signature shape
+@mixin mag-arch {
+  border-radius: 50% 50% 8px 8px / 35% 35% 8px 8px;
+  overflow: hidden;
+  background: $color-bg-alt;
+}
+
+// Paper grain texture (subtle warm noise)
+@mixin mag-grain($opacity: 0.4) {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: $opacity;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.137 0 0 0 0 0.106 0 0 0 0 0.078 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+    z-index: 0;
+  }
+}
+
+// Field input — pill-shaped, ink underline focus
+@mixin mag-field {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  background: $color-bg;
+  color: $color-secondary;
+  font-family: $font-body;
+  font-size: 0.95rem;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-full;
+  transition: border-color $transition-base, box-shadow $transition-base, background-color $transition-base;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-secondary;
+    box-shadow: 0 0 0 3px rgba(35, 27, 20, 0.08);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    background: $color-bg-alt;
+  }
+}
+
+// Label above a field
+@mixin mag-label {
+  display: block;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+  margin-bottom: 0.5rem;
+}
+
+// Card wrapper (bordered editorial block)
+@mixin mag-card {
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: clamp(1.2rem, 2.5vw, 1.8rem);
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    border-color: $color-secondary;
+  }
+}
+
+// Section divider with central glyph
+@mixin mag-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: clamp(2rem, 5vw, 3.5rem) 0;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $color-border-strong;
+  }
+
+  &::before {
+    background: linear-gradient(to right, transparent, $color-border-strong);
+  }
+
+  &::after {
+    background: linear-gradient(to left, transparent, $color-border-strong);
+  }
+}
+
+// Section container — magazine page width
+@mixin mag-container {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+}
+
+// Drop initial (first letter editorial flourish)
+@mixin mag-drop-initial($color: $color-primary) {
+  &::first-letter {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 2.4em;
+    float: left;
+    line-height: 0.85;
+    margin: 0.05em 0.18em 0 0;
+    color: $color;
+  }
+}

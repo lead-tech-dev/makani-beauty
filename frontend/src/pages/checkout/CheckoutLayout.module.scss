@@ -1,0 +1,182 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/magazine" as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg;
+  padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(3rem, 6vw, 5rem);
+  position: relative;
+  overflow: hidden;
+  color: $color-secondary;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -10vw;
+    right: -10vw;
+    width: 28vw;
+    height: 28vw;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(230, 167, 80, 0.32),
+      transparent 70%
+    );
+    z-index: 0;
+    pointer-events: none;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $color-bg;
+  background: $color-secondary;
+  padding: 0.35rem 0.8rem;
+  border-radius: $radius-full;
+  text-decoration: none;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background: $color-primary;
+  }
+}
+
+.title {
+  @include mag-title(clamp(2.2rem, 5vw, 3.6rem));
+  font-style: italic;
+  margin: 0;
+}
+
+// ── Stepper ──────────────────────────────────────────────────────
+.stepper {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+  max-width: 600px;
+  border-top: 1px solid $color-secondary;
+  border-bottom: 1px solid $color-secondary;
+  padding: 1.2rem 0;
+}
+
+.stepWrap {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  &:last-child {
+    flex: 0;
+  }
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+  padding: 0.1rem 0.6rem;
+  transition: opacity $transition-base;
+
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid $color-border-strong;
+  background: $color-bg;
+  color: $color-text-muted;
+  font-family: $font-mono;
+  font-weight: 700;
+  font-size: 0.78rem;
+  transition: background-color $transition-base, color $transition-base, border-color $transition-base;
+}
+
+.label {
+  font-family: $font-body;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  white-space: nowrap;
+  transition: color $transition-base;
+
+  @include breakpoint-down($bp-sm) {
+    display: none;
+  }
+}
+
+.active {
+  .dot {
+    background: $color-secondary;
+    color: $color-bg;
+    border-color: $color-secondary;
+  }
+
+  .label {
+    color: $color-secondary;
+    font-weight: 700;
+  }
+}
+
+.done {
+  .dot {
+    background: $color-primary;
+    color: $color-bg;
+    border-color: $color-primary;
+  }
+
+  .label {
+    color: $color-secondary;
+  }
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: $color-border-strong;
+  margin: 0 0.6rem;
+  align-self: center;
+  min-width: 24px;
+  transition: background-color $transition-base;
+}
+
+.lineDone {
+  background: $color-primary;
+}
+
+.content {
+  min-width: 0;
+}

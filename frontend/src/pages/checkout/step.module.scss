@@ -1,0 +1,1524 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/magazine" as *;
+
+// Shared styles for every checkout step (Cart / Shipping / Payment)
+// — magazine editorial feel, ink + cream + terracotta accents
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  align-items: start;
+
+  @include breakpoint-down($bp-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1.4rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid $color-border;
+  font-family: $font-heading;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: $color-secondary;
+
+  svg {
+    color: $color-primary;
+  }
+}
+
+// ── Cart list (step 1) ───────────────────────────────────────
+.cartList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cartItem {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.cartItemUnavailable {
+  opacity: 0.6;
+
+  .cartName,
+  .cartPrice {
+    text-decoration: line-through;
+    color: $color-text-muted;
+  }
+}
+
+.cartStockLine {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+  font-weight: 700;
+}
+
+.stockAlertBanner {
+  margin: 0 0 1.25rem;
+  padding: 0.95rem 1.1rem;
+  background: $color-bg-alt;
+  border: 1px solid $color-accent;
+  border-left: 4px solid $color-accent;
+  border-radius: $radius-md;
+
+  ul {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: $font-body;
+    font-size: 0.85rem;
+    color: $color-secondary;
+    flex-wrap: wrap;
+
+    em {
+      color: $color-accent-dark;
+      font-style: normal;
+      font-weight: 500;
+    }
+  }
+}
+
+.stockAlertHead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+
+  svg {
+    color: $color-accent;
+  }
+}
+
+.stockAlertName {
+  font-weight: 600;
+  color: $color-secondary;
+}
+
+.stockAlertAction {
+  margin-left: auto;
+  background: $color-bg;
+  border: 1px solid $color-accent-dark;
+  color: $color-accent-dark;
+  border-radius: $radius-full;
+  padding: 0.35rem 0.7rem;
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: background-color $transition-base, color $transition-base;
+
+  &:hover {
+    background: $color-accent-dark;
+    color: $color-bg;
+  }
+}
+
+.cartThumb {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  border-radius: 50% 50% 6px 6px / 30% 30% 6px 6px;
+  overflow: hidden;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.cartInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.cartBrand {
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: $color-accent-dark;
+  font-weight: 700;
+}
+
+.cartName {
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: $color-secondary;
+  text-decoration: none;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.cartFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  gap: 0.75rem;
+}
+
+.qtyControl {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-full;
+  overflow: hidden;
+  background: $color-bg;
+
+  button {
+    background: transparent;
+    border: none;
+    padding: 0.45rem 0.7rem;
+    color: $color-secondary;
+    cursor: pointer;
+    transition: background-color $transition-base, color $transition-base;
+
+    &:hover:not(:disabled) {
+      background: $color-secondary;
+      color: $color-bg;
+    }
+  }
+
+  span {
+    min-width: 32px;
+    text-align: center;
+    font-family: $font-mono;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: $color-secondary;
+    padding: 0 0.4rem;
+  }
+}
+
+.cartPrice {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: 0.96rem;
+  color: $color-secondary;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.removeBtn {
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid transparent;
+  color: $color-text-muted;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color $transition-base, background-color $transition-base, border-color $transition-base;
+  align-self: flex-start;
+
+  &:hover {
+    color: $color-error;
+    background: $color-bg-alt;
+    border-color: rgba(192, 57, 43, 0.3);
+  }
+}
+
+// ── Address picker (step 2) ──────────────────────────────────
+.addressList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.addressCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  transition: border-color $transition-base, background-color $transition-base;
+  position: relative;
+  background: $color-bg;
+
+  input[type="radio"] {
+    margin-top: 0.2rem;
+    accent-color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    font-family: $font-body;
+    font-size: 0.9rem;
+    color: $color-secondary;
+    line-height: 1.5;
+
+    strong {
+      font-family: $font-heading;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 0.98rem;
+      color: $color-secondary;
+    }
+  }
+
+  &:hover {
+    border-color: $color-secondary;
+  }
+
+  &.selectedAddr {
+    border-color: $color-primary;
+    background: $color-bg-alt;
+  }
+}
+
+.defaultBadge {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.85rem;
+  font-family: $font-mono;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-bg;
+  background: $color-secondary;
+  padding: 0.22rem 0.5rem;
+  border-radius: $radius-full;
+}
+
+.addAddressBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 0.85rem 1rem;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-secondary;
+  cursor: pointer;
+  transition: border-color $transition-base, background-color $transition-base, color $transition-base;
+  width: 100%;
+  justify-content: center;
+
+  &:hover {
+    border-color: $color-secondary;
+    border-style: solid;
+    background: $color-secondary;
+    color: $color-bg;
+  }
+}
+
+.addressForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1.4rem;
+  background: $color-bg-alt;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border-strong;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @include breakpoint-down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    @include mag-label;
+    margin: 0;
+  }
+
+  input,
+  textarea {
+    @include mag-field;
+    border-radius: $radius-md;
+  }
+}
+
+.notesField {
+  resize: vertical;
+}
+
+.err {
+  font-family: $font-body;
+  font-size: 0.78rem;
+  color: $color-error;
+  font-weight: 500;
+}
+
+.checkboxField {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  color: $color-secondary;
+  cursor: pointer;
+
+  input {
+    accent-color: $color-primary;
+  }
+}
+
+.saveBtn {
+  @include mag-cta;
+  align-self: flex-start;
+}
+
+// ── Payment (step 3) ─────────────────────────────────────────
+.paymentPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: $color-bg-alt;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-lg;
+  margin-bottom: 1.5rem;
+
+  svg {
+    color: $color-primary;
+    margin-bottom: 0.85rem;
+  }
+
+  h3 {
+    font-family: $font-heading;
+    font-style: italic;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $color-secondary;
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    font-family: $font-body;
+    font-size: 0.88rem;
+    color: $color-text-muted;
+    margin: 0 0 0.5rem;
+    line-height: 1.6;
+  }
+}
+
+.placeholderHint {
+  font-size: 0.78rem !important;
+  color: $color-text-muted !important;
+  margin-top: 0.85rem !important;
+  font-style: italic;
+}
+
+// ── Mode pill bar (delivery / pickup / relay) ─────────────────
+.modePillBar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+
+  @include breakpoint-down($bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modePill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.95rem 1.1rem;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: border-color $transition-base, background-color $transition-base, transform $transition-base;
+
+  &:hover {
+    border-color: $color-secondary;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+
+  > svg {
+    color: $color-text-muted;
+    flex-shrink: 0;
+    transition: color $transition-base;
+  }
+
+  &.modePillActive {
+    border-color: $color-primary;
+    background: $color-bg-alt;
+    box-shadow: 0 6px 18px rgba(196, 77, 58, 0.14);
+
+    > svg {
+      color: $color-primary;
+    }
+  }
+}
+
+.modePillBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  flex: 1;
+
+  strong {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: $color-secondary;
+  }
+
+  span {
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: $color-text-muted;
+  }
+}
+
+.modePillCheck {
+  color: $color-primary;
+  flex-shrink: 0;
+}
+
+.modePanel {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  animation: panelIn 0.18s $ease-out;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.panelTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: $color-secondary;
+
+  svg {
+    color: $color-primary;
+  }
+}
+
+.editLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: 1px solid $color-secondary;
+  cursor: pointer;
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-secondary;
+  padding: 0.35rem 0.7rem;
+  border-radius: $radius-full;
+  text-decoration: none;
+  transition: background-color $transition-base, color $transition-base;
+
+  &:hover {
+    background: $color-secondary;
+    color: $color-bg;
+  }
+}
+
+// ── Address empty state ─────────────────────────────────────
+.addressEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: $color-bg-alt;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 1.4rem;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-secondary;
+  cursor: pointer;
+  transition: background-color $transition-base, border-color $transition-base, color $transition-base;
+
+  &:hover {
+    background: $color-secondary;
+    border-color: $color-secondary;
+    color: $color-bg;
+  }
+}
+
+// ── Relay selected card ─────────────────────────────────────
+.relaySelected {
+  background: $color-bg-alt;
+  border: 1px solid $color-primary;
+  border-left: 4px solid $color-primary;
+  border-radius: $radius-md;
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.relayHead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $color-secondary;
+
+  svg {
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  strong {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+}
+
+.relayAddress {
+  font-family: $font-body;
+  font-size: 0.88rem;
+  color: $color-text-muted;
+  line-height: 1.55;
+}
+
+.relayHours {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+
+  svg {
+    color: $color-text-muted;
+  }
+}
+
+// ── Pickup block (compact) ──────────────────────────────────
+.pickupBlock {
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-family: $font-body;
+  font-size: 0.88rem;
+  color: $color-secondary;
+  line-height: 1.55;
+
+  strong {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+}
+
+.pickupAddress {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-family: $font-body;
+  font-size: 0.92rem;
+  color: $color-secondary;
+  line-height: 1.5;
+  margin: 0 0 0.85rem;
+
+  strong {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+}
+
+.pickupRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $font-body;
+  font-size: 0.88rem;
+  color: $color-secondary;
+  padding: 0.25rem 0;
+
+  svg {
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+}
+
+.pickupNotes {
+  margin: 0.85rem 0 0;
+  padding: 0.7rem 0.95rem;
+  background: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: $color-text-muted;
+}
+
+// ── Express option ──────────────────────────────────────────
+.expressOption {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  background: $color-bg;
+  transition: border-color $transition-base, background-color $transition-base, box-shadow $transition-base;
+  user-select: none;
+
+  &:hover {
+    border-color: $color-secondary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+
+  &.expressOptionActive {
+    border-color: $color-accent-dark;
+    background: $color-bg-alt;
+    box-shadow: 0 6px 18px rgba(183, 132, 62, 0.16);
+  }
+}
+
+.expressIcon {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  color: $color-text-muted;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color $transition-base, border-color $transition-base, background-color $transition-base;
+
+  .expressOptionActive & {
+    color: $color-accent-dark;
+    border-color: $color-accent-dark;
+    background: $color-bg;
+  }
+}
+
+.expressBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+
+  strong {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $font-heading;
+    font-style: italic;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: $color-secondary;
+  }
+
+  span {
+    font-family: $font-body;
+    font-size: 0.82rem;
+    color: $color-text-muted;
+  }
+}
+
+.expressActiveBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: $font-mono;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: $color-accent-dark;
+  color: $color-bg;
+  padding: 0.2rem 0.5rem;
+  border-radius: $radius-full;
+}
+
+.expressPrice {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: $color-accent-dark;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+
+  .expressOption:not(.expressOptionActive) & {
+    color: $color-text-muted;
+  }
+}
+
+.paypalBlock {
+  margin-top: 1.25rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 1.2rem 0;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: $color-text-muted;
+  text-transform: uppercase;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $color-border-strong;
+  }
+}
+
+// ── Address recap (read-only) ───────────────────────────────
+.addressRecap {
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  padding: 1.1rem 1.25rem;
+  font-family: $font-body;
+  font-size: 0.88rem;
+  color: $color-secondary;
+  line-height: 1.55;
+
+  address {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-top: 0.6rem;
+
+    strong {
+      font-family: $font-heading;
+      font-style: italic;
+      font-weight: 600;
+      color: $color-secondary;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+.addressRecapHead {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+}
+
+// ── Notes details (collapsible) ─────────────────────────────
+.notesDetails {
+  border-top: 1px solid $color-border;
+  padding-top: 1rem;
+
+  > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-family: $font-body;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-secondary;
+    list-style: none;
+    user-select: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: "+";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 50%;
+      background: $color-secondary;
+      color: $color-bg;
+      font-weight: 700;
+      transition: transform $transition-base;
+    }
+  }
+
+  &[open] > summary::before {
+    content: "−";
+  }
+
+  > textarea {
+    margin-top: 0.7rem;
+    @include mag-field;
+    border-radius: $radius-md;
+    resize: vertical;
+  }
+}
+
+// ── Summary (right column) ───────────────────────────────────
+.summary {
+  background: $color-bg;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-lg;
+  padding: 1.5rem 1.6rem;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: $font-body;
+  font-size: 0.9rem;
+  color: $color-secondary;
+  padding: 0.5rem 0;
+
+  &.grandTotal {
+    font-family: $font-heading;
+    font-weight: 700;
+    font-size: 0.96rem;
+    padding-top: 0.95rem;
+    margin-top: 0.6rem;
+    border-top: 1px solid $color-border;
+
+    strong {
+      font-family: $font-heading;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: $color-primary;
+      letter-spacing: -0.01em;
+    }
+  }
+}
+
+.summaryNote {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  margin: 0 0 0.6rem;
+}
+
+.miniList {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    font-family: $font-body;
+    font-size: 0.85rem;
+    color: $color-secondary;
+    gap: 0.5rem;
+
+    span:first-child {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    em {
+      color: $color-text-muted;
+      font-style: normal;
+    }
+
+    span:last-child {
+      white-space: nowrap;
+      font-weight: 600;
+    }
+  }
+}
+
+// ── Promo block ──────────────────────────────────────────────
+.promoBlock {
+  margin: 0.85rem 0 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed $color-border-strong;
+}
+
+.promoForm {
+  display: flex;
+  gap: 0.4rem;
+
+  input {
+    flex: 1;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid $color-border-strong;
+    border-radius: $radius-full;
+    background: $color-bg;
+    font-family: $font-mono;
+    font-size: 0.82rem;
+    color: $color-secondary;
+    outline: none;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: border-color $transition-base, box-shadow $transition-base;
+
+    &:focus {
+      border-color: $color-secondary;
+      box-shadow: 0 0 0 3px rgba(35, 27, 20, 0.08);
+    }
+
+    &::placeholder {
+      color: $color-text-muted;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    &:disabled {
+      background: $color-bg-alt;
+    }
+  }
+
+  button {
+    background: $color-secondary;
+    color: $color-bg;
+    border: none;
+    border-radius: $radius-full;
+    padding: 0 1.1rem;
+    font-family: $font-body;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color $transition-base;
+
+    &:hover:not(:disabled) {
+      background: $color-primary;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.promoApplied {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: $color-bg-alt;
+  border: 1px solid $color-primary;
+  border-radius: $radius-md;
+  padding: 0.6rem 0.85rem;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  color: $color-primary;
+
+  > span {
+    flex: 1;
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: $color-primary;
+    cursor: pointer;
+    padding: 0.2rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background: rgba(196, 77, 58, 0.1);
+    }
+  }
+}
+
+.promoMsg {
+  font-family: $font-body;
+  font-size: 0.78rem;
+  margin: 0.4rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  &.promoMsgErr {
+    color: $color-error;
+  }
+
+  &.promoMsgOk {
+    color: $color-success;
+  }
+}
+
+.discountRow {
+  color: $color-success !important;
+  font-weight: 600;
+}
+
+.apiError {
+  font-family: $font-body;
+  font-size: 0.85rem;
+  color: $color-error;
+  background: rgba(192, 57, 43, 0.06);
+  border: 1px solid rgba(192, 57, 43, 0.3);
+  border-radius: $radius-md;
+  padding: 0.85rem 1.1rem;
+  margin: 1rem 0;
+}
+
+.primaryBtn {
+  @include mag-cta;
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 1.1rem 1.5rem;
+  font-size: 0.85rem;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  justify-content: center;
+  margin-top: 0.85rem;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+// ── Smart summary ───────────────────────────────────────────
+.summaryShip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.95rem 0;
+  border-top: 1px solid $color-border;
+  margin-top: 0.5rem;
+}
+
+.summaryShipHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.summaryShipLabel {
+  font-family: $font-body;
+  font-size: 0.88rem;
+  color: $color-secondary;
+}
+
+.summaryShipPrice {
+  font-family: $font-heading;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: $color-secondary;
+}
+
+.summaryShipPlaceholder {
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: $color-text-muted;
+}
+
+.summaryShipCarrier {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+}
+
+.summaryShipHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  color: $color-accent-dark;
+  font-weight: 500;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.summaryTotal {
+  border-top: 1px solid $color-border;
+  padding-top: 0.95rem;
+  margin-top: 0.3rem;
+  font-family: $font-heading;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: $color-secondary;
+
+  strong {
+    color: $color-primary;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+  }
+}
+
+.summaryWarn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.55rem 0 0;
+  padding: 0.55rem 0.85rem;
+  background: $color-bg-alt;
+  border: 1px solid $color-accent;
+  color: $color-accent-dark;
+  border-radius: $radius-md;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+// ── Recommendations ─────────────────────────────────────────
+.recoSection {
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid $color-border;
+}
+
+.recoTitle {
+  margin: 0 0 0.25rem;
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $color-secondary;
+}
+
+.recoSub {
+  margin: 0 0 0.95rem;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  color: $color-text-muted;
+}
+
+.recoList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.65rem;
+}
+
+.recoItem {
+  margin: 0;
+  position: relative;
+}
+
+.recoAdd {
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: $color-primary;
+  color: $color-bg;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background-color $transition-base, transform $transition-base;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-dark;
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  &:disabled {
+    background: $color-success;
+    color: $color-bg;
+    cursor: default;
+  }
+}
+
+.recoLink {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-bg-alt;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color $transition-base, background-color $transition-base, transform $transition-base;
+
+  &:hover {
+    border-color: $color-secondary;
+    background: $color-bg;
+    transform: translateY(-1px);
+  }
+
+  img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 50% 50% 4px 4px / 30% 30% 4px 4px;
+    background: $color-bg;
+  }
+}
+
+.recoBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+
+  strong {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: $color-secondary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+}
+
+.recoBrand {
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+}
+
+.recoPrice {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $color-primary;
+  margin-top: 0.15rem;
+  letter-spacing: -0.01em;
+}
+
+// ── Legacy class kept for compat ────────────────────────────
+.fulfillmentChoice {
+  @extend .modePillBar;
+}
+
+.fulfillmentCard {
+  @extend .modePill;
+}
+
+.fulfillmentBody {
+  @extend .modePillBody;
+}
+
+.fulfillmentHead {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: $color-secondary;
+
+  svg {
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  strong {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+}
+
+.fulfillmentBadge {
+  margin-left: auto;
+  font-family: $font-mono;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: $color-success;
+  color: $color-bg;
+  padding: 0.2rem 0.5rem;
+  border-radius: $radius-full;
+  text-transform: uppercase;
+}
+
+.fulfillmentSub {
+  font-family: $font-body;
+  font-size: 0.82rem;
+  color: $color-text-muted;
+}

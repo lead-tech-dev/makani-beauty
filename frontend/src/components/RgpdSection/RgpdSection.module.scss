@@ -1,0 +1,215 @@
+.section {
+  margin-top: 1.5rem;
+  background: #fff;
+  border: 1px solid #f0ebe4;
+  border-radius: 14px;
+  padding: 1.4rem 1.6rem;
+}
+
+.header {
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0 0 0.3rem;
+    font-size: 0.96rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+%btnBase {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btnSecondary {
+  @extend %btnBase;
+  background: #fff;
+  border: 1px solid #d8d3cc;
+  color: #1a1a1a;
+  align-self: flex-start;
+
+  &:hover:not(:disabled) { background: #f7f4ef; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btnDanger {
+  @extend %btnBase;
+  background: #fff;
+  border: 1px solid #e8a09a;
+  color: #b3261e;
+  align-self: flex-start;
+
+  &:hover:not(:disabled) { background: #fdf1ef; border-color: #d8736b; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btnGhost {
+  @extend %btnBase;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #b3261e;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+
+  &:hover { background: rgba(179, 38, 30, 0.06); }
+}
+
+.pendingBanner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.95rem 1.1rem;
+  background: #fef3cd;
+  border: 1px solid #f5d272;
+  border-radius: 10px;
+
+  > svg { color: #856404; flex-shrink: 0; }
+
+  strong { display: block; color: #856404; font-size: 0.92rem; margin-bottom: 0.15rem; }
+
+  p { margin: 0; color: #785304; font-size: 0.84rem; line-height: 1.5; }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 20, 16, 0.55);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid #f0ebe4;
+
+  h3 {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.02rem;
+    color: #b3261e;
+    font-weight: 600;
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    color: #555;
+    border-radius: 6px;
+
+    &:hover { background: #f7f4ef; color: #1a1a1a; }
+  }
+}
+
+.modalBody {
+  padding: 1.1rem 1.4rem;
+  overflow-y: auto;
+
+  p { margin: 0 0 0.8rem; font-size: 0.9rem; color: #444; line-height: 1.55; }
+}
+
+.what {
+  margin: 0.5rem 0 1rem;
+  padding: 0.85rem 1rem;
+  background: #fafaf8;
+  border: 1px solid #f0ebe4;
+  border-radius: 8px;
+  list-style: none;
+
+  li {
+    font-size: 0.85rem;
+    color: #444;
+    padding: 0.2rem 0;
+    line-height: 1.5;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.86rem;
+  color: #444;
+
+  > span { font-weight: 500; color: #1a1a1a; }
+
+  textarea, input {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #d8d3cc;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    background: #fff;
+    resize: vertical;
+
+    &:focus {
+      outline: none;
+      border-color: #C44D3A;
+      box-shadow: 0 0 0 3px rgba(10, 61, 49, 0.1);
+    }
+  }
+}
+
+.error {
+  padding: 0.6rem 0.85rem;
+  background: #fdecea;
+  border: 1px solid #f5c2c0;
+  border-radius: 8px;
+  color: #b3261e;
+  font-size: 0.85rem;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.95rem 1.4rem;
+  border-top: 1px solid #f0ebe4;
+  background: #fafaf8;
+}

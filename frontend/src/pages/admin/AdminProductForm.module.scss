@@ -1,0 +1,226 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/magazine" as *;
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  text-decoration: none;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+
+  @include breakpoint-down($bp-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mainCol,
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.sectionTitle {
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: $color-secondary;
+  margin: 0 0 1.3rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid $color-border;
+  letter-spacing: -0.005em;
+}
+
+// ── Image picker ─────────────────────────────────────────────────
+.imagePickerRow {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.previewMain {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 50% 50% 6px 6px / 30% 30% 6px 6px;
+  border: 1px solid $color-border-strong;
+  background: $color-bg-alt;
+}
+
+.previewPlaceholder {
+  width: 110px;
+  height: 110px;
+  border-radius: 50% 50% 6px 6px / 30% 30% 6px 6px;
+  border: 1px dashed $color-border-strong;
+  background: $color-bg-alt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  text-align: center;
+  padding: 0.5rem;
+  font-weight: 600;
+}
+
+.imageActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+
+  input {
+    border: 1px solid $color-border-strong;
+    border-radius: $radius-md;
+    padding: 0.6rem 0.9rem;
+    font-family: $font-body;
+    font-size: 0.85rem;
+    background: $color-bg;
+    color: $color-secondary;
+    outline: none;
+    transition: border-color $transition-base, box-shadow $transition-base;
+
+    &:focus {
+      border-color: $color-secondary;
+      box-shadow: 0 0 0 3px rgba(35, 27, 20, 0.08);
+    }
+  }
+}
+
+// ── Gallery ──────────────────────────────────────────────────────
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.5rem;
+}
+
+.galleryItem {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: $radius-md;
+  overflow: hidden;
+  border: 1px solid $color-border-strong;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.galleryRemove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: $color-secondary;
+  color: $color-bg;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color $transition-base;
+
+  &:hover {
+    background: $color-error;
+  }
+}
+
+.galleryAdd {
+  aspect-ratio: 1;
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-md;
+  background: $color-bg-alt;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  cursor: pointer;
+  transition: border-color $transition-base, background-color $transition-base, color $transition-base;
+
+  &:hover {
+    border-color: $color-secondary;
+    background: $color-bg;
+    color: $color-secondary;
+  }
+}
+
+// ── Save box (sticky) ────────────────────────────────────────────
+.saveBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.facetChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.facetChip {
+  padding: 0.45rem 0.95rem;
+  border-radius: $radius-full;
+  border: 1px solid $color-border-strong;
+  background: $color-bg;
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-secondary;
+  cursor: pointer;
+  transition: background-color $transition-base, border-color $transition-base, color $transition-base;
+
+  &:hover {
+    background: $color-bg-alt;
+    border-color: $color-secondary;
+  }
+}
+
+.facetChipActive {
+  background: $color-secondary;
+  border-color: $color-secondary;
+  color: $color-bg;
+
+  &:hover {
+    background: $color-primary;
+    border-color: $color-primary;
+  }
+}

@@ -1,0 +1,70 @@
+@use "../../styles/variables" as *;
+
+.marquee {
+  position: relative;
+  background: $color-secondary;
+  color: $color-bg;
+  padding: 1rem 0;
+  overflow: hidden;
+  border-block: 1px solid $color-secondary-dark;
+
+  // Soft gradient masks on edges so the loop fades in/out
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 8vw;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, $color-secondary, transparent);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, $color-secondary, transparent);
+  }
+}
+
+.track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: scroll 50s linear infinite;
+  will-change: transform;
+}
+
+.itemGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.6rem;
+  padding-right: 2.6rem;
+}
+
+.item {
+  font-family: $font-heading;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+  letter-spacing: 0.005em;
+  color: $color-bg;
+}
+
+.divider {
+  font-size: 0.9rem;
+  color: $color-accent;
+  opacity: 0.85;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}

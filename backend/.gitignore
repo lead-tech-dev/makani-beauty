@@ -1,0 +1,18 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.local
+.env.*.local
+*.log
+
+# Local uploads & generated assets (filesystem fallback — prod uses R2)
+uploads/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Build artefacts
+*.tsbuildinfo

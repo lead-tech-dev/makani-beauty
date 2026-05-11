@@ -1,0 +1,211 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Editorial spread (split arch + pull quote) ──────────────────
+.editorial {
+  position: relative;
+  background: $color-bg-alt;
+  color: $color-secondary;
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  overflow: hidden;
+  border-top: 1px solid $color-border-strong;
+  border-bottom: 1px solid $color-border-strong;
+
+  // Tall vertical "page rule" on left
+  &::before {
+    content: "";
+    position: absolute;
+    top: 2rem;
+    bottom: 2rem;
+    left: clamp(1rem, 4vw, 3rem);
+    width: 1px;
+    background: $color-border-strong;
+
+    @include breakpoint-down($bp-md) {
+      display: none;
+    }
+  }
+
+  // Soft ochre disc behind quote
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -16vw;
+    right: -10vw;
+    width: 38vw;
+    height: 38vw;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(230, 167, 80, 0.42),
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+}
+
+.editorialInner {
+  position: relative;
+  z-index: 1;
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 clamp(2rem, 6vw, 4.5rem);
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+
+  @include breakpoint-down($bp-md) {
+    grid-template-columns: 1fr;
+    padding: 0 1.25rem;
+  }
+}
+
+.editorialMedia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5.4;
+  isolation: isolate;
+
+  // Echo of the arch shape behind
+  &::before {
+    content: "";
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    right: -0.4rem;
+    bottom: -0.4rem;
+    border-radius: 50% 50% 8px 8px / 35% 35% 8px 8px;
+    background: $color-primary;
+    z-index: 0;
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% 50% 8px 8px / 35% 35% 8px 8px;
+    background: $color-secondary;
+    box-shadow: $shadow-lg;
+  }
+}
+
+.editorialContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+  position: relative;
+
+  // Massive opening quote mark
+  &::before {
+    content: "“";
+    position: absolute;
+    top: -3rem;
+    left: -1rem;
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 9rem;
+    line-height: 1;
+    color: $color-primary;
+    opacity: 0.18;
+    pointer-events: none;
+
+    @include breakpoint-down($bp-md) {
+      font-size: 6rem;
+      top: -2rem;
+      left: -0.5rem;
+    }
+  }
+}
+
+.editorialEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+
+  &::before {
+    content: "№ 02";
+    background: $color-secondary;
+    color: $color-bg;
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius-full;
+    letter-spacing: 0.18em;
+  }
+}
+
+.editorialTitle {
+  font-family: $font-heading;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5.2vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: $color-secondary;
+  margin: 0;
+  max-width: 16ch;
+
+  em {
+    font-style: italic;
+    font-weight: 700;
+    color: $color-primary;
+  }
+}
+
+.editorialContent p {
+  font-family: $font-body;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: $color-text-muted;
+  max-width: 38rem;
+  margin: 0;
+}
+
+.editorialCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  padding: 1rem 1.6rem;
+  background: $color-secondary;
+  color: $color-bg;
+  border-radius: $radius-full;
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color $transition-base, transform $transition-base;
+
+  &::after {
+    content: "↗";
+    font-family: $font-heading;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0;
+    transition: transform $transition-base;
+  }
+
+  &:hover {
+    background: $color-primary;
+    transform: translateY(-2px);
+  }
+
+  &:hover::after {
+    transform: translate(2px, -2px);
+  }
+}

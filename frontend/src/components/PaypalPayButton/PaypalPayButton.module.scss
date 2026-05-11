@@ -1,0 +1,138 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.loading {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+  padding: 1rem 0;
+}
+
+.error {
+  background: #fdf0ef;
+  border: 1px solid #f4c8c4;
+  color: #c0392b;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  margin: 0.5rem 0 0;
+}
+
+// ── Divider ─────────────────────────────────────────────────
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 1rem;
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0d8d0;
+  }
+}
+
+// ── Card form (matches the app's input + card style) ────────
+
+.cardForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: #fafaf8;
+  border: 1px solid #f0ebe4;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+
+  svg { color: #C44D3A; }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 0.02em;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+// Wrapper around each PayPal hosted field iframe — gives the input look
+.fieldShell {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid #e0d8d0;
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  height: 44px;
+  transition: border-color 0.15s ease;
+
+  &:focus-within {
+    border-color: #C44D3A;
+    box-shadow: 0 0 0 3px rgba(10, 61, 49, 0.08);
+  }
+
+  // PayPal renders its iframe as a direct child — make it fill the shell
+  > * {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.payBtn {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: #C44D3A;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover:not(:disabled) { background: #9E3A2C; }
+  &:disabled { opacity: 0.65; cursor: not-allowed; }
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: #999;
+  margin: 0.4rem 0 0;
+}

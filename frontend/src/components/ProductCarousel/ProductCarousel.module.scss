@@ -1,0 +1,163 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.section {
+  position: relative;
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: clamp(3.5rem, 6vw, 6rem) clamp(2rem, 6vw, 4.5rem);
+
+  @include breakpoint-down($bp-md) {
+    padding: clamp(2.5rem, 6vw, 4rem) 1.25rem;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid $color-secondary;
+}
+
+.headLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 36rem;
+}
+
+.eyebrowRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.issue {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-bg;
+  background: $color-secondary;
+  padding: 0.3rem 0.55rem;
+  border-radius: $radius-full;
+}
+
+.eyebrowText {
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+}
+
+.title {
+  font-family: $font-heading;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: $color-secondary;
+  margin: 0;
+}
+
+.headRight {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.3rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.1rem;
+  background: transparent;
+  color: $color-secondary;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-full;
+  font-family: $font-body;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color $transition-base, color $transition-base, transform $transition-base;
+
+  &:hover {
+    background: $color-secondary;
+    color: $color-bg;
+    transform: translateY(-1px);
+  }
+
+  svg {
+    transition: transform $transition-base;
+  }
+
+  &:hover svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.ctrl {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  border: 1px solid $color-secondary;
+  background: $color-bg;
+  color: $color-secondary;
+  cursor: pointer;
+  transition: background-color $transition-base, color $transition-base;
+
+  &:hover {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: $color-bg;
+  }
+}
+
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: clamp(1rem, 1.6vw, 1.8rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 4rem;
+  // breathing room above the asymmetric offset cards
+
+  @include breakpoint-up($bp-md) {
+    grid-auto-columns: minmax(280px, 1fr);
+  }
+
+  @include breakpoint-up($bp-lg) {
+    grid-auto-columns: minmax(305px, 1fr);
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.slide {
+  scroll-snap-align: start;
+  min-width: 0;
+}

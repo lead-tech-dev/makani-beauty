@@ -1,0 +1,432 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+
+  a {
+    color: $color-secondary;
+    text-decoration: none;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  span {
+    color: $color-text-muted;
+
+    &:last-child {
+      color: $color-primary;
+      font-style: italic;
+      font-family: $font-heading;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 1.6rem 2rem;
+}
+
+.title {
+  @include mag-title(clamp(1.6rem, 3.4vw, 2.2rem));
+  font-style: italic;
+  margin: 0 0 0.4rem;
+}
+
+.date {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.95rem;
+  border-radius: $radius-full;
+  white-space: nowrap;
+
+  &.orange { background: rgba(230, 167, 80, 0.22); color: $color-accent-dark; }
+  &.blue   { background: $color-secondary; color: $color-bg; }
+  &.purple { background: $color-secondary; color: $color-accent; }
+  &.green  { background: rgba(79, 122, 63, 0.18); color: $color-success; }
+  &.red    { background: rgba(192, 57, 43, 0.1); color: $color-error; }
+}
+
+// ── Progress timeline ────────────────────────────────────────────
+.progress {
+  display: flex;
+  align-items: flex-start;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 1.8rem 2rem;
+  overflow-x: auto;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  min-width: 80px;
+
+  span {
+    font-family: $font-mono;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    margin-top: 0.6rem;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  &.done {
+    .dot {
+      background: $color-primary;
+      border-color: $color-primary;
+    }
+
+    .line {
+      background: $color-primary;
+    }
+
+    span {
+      color: $color-secondary;
+      font-weight: 700;
+    }
+  }
+}
+
+.dot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid $color-border-strong;
+  background: $color-bg;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.line {
+  position: absolute;
+  top: 7px;
+  left: calc(50% + 8px);
+  width: calc(100% - 16px);
+  height: 1px;
+  background: $color-border-strong;
+}
+
+// ── Grid ─────────────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 1.5rem;
+  align-items: start;
+
+  @include breakpoint-down($bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 1.8rem;
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1.4rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid $color-border;
+  font-family: $font-heading;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  color: $color-secondary;
+
+  svg {
+    color: $color-primary;
+  }
+}
+
+.itemList {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50% 50% 4px 4px / 30% 30% 4px 4px;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  flex-shrink: 0;
+}
+
+.itemInfo {
+  flex: 1;
+}
+
+.itemName {
+  display: block;
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $color-secondary;
+}
+
+.itemMeta {
+  display: block;
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  margin-top: 0.3rem;
+}
+
+.itemTotal {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: $color-primary;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.totals {
+  border-top: 1px solid $color-border;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-family: $font-body;
+  font-size: 0.9rem;
+  color: $color-secondary;
+
+  &.total {
+    font-family: $font-heading;
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid $color-border;
+    margin-top: 0.3rem;
+
+    strong {
+      font-family: $font-heading;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: $color-primary;
+      letter-spacing: -0.01em;
+    }
+  }
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-style: normal;
+  font-family: $font-body;
+  font-size: 0.9rem;
+  color: $color-secondary;
+  margin-bottom: 1.5rem;
+  line-height: 1.55;
+
+  strong {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: $color-secondary;
+  }
+}
+
+.notesBox {
+  background: $color-bg-alt;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 0.85rem 1.1rem;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+
+  strong {
+    display: block;
+    font-family: $font-mono;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-accent-dark;
+    margin-bottom: 0.35rem;
+  }
+
+  p {
+    margin: 0;
+    font-family: $font-heading;
+    font-style: italic;
+    color: $color-secondary;
+  }
+}
+
+.cancelBtn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(192, 57, 43, 0.4);
+  border-radius: $radius-full;
+  padding: 0.85rem;
+  font-family: $font-body;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-error;
+  cursor: pointer;
+  transition: background-color $transition-base, color $transition-base;
+
+  &:hover:not(:disabled) {
+    background: $color-error;
+    color: $color-bg;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ── Payment section ──────────────────────────────────────────────
+.payRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: $font-body;
+  font-size: 0.9rem;
+  color: $color-secondary;
+  padding: 0.55rem 0;
+
+  &.first {
+    padding-top: 0;
+  }
+
+  span:last-child {
+    color: $color-secondary;
+    font-weight: 600;
+  }
+}
+
+.payBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: $radius-full;
+  white-space: nowrap;
+
+  &.payPending  { background: rgba(230, 167, 80, 0.18); color: $color-accent-dark; border: 1px solid rgba(230, 167, 80, 0.5); }
+  &.payPaid     { background: rgba(79, 122, 63, 0.16); color: $color-success; border: 1px solid rgba(79, 122, 63, 0.4); }
+  &.payFailed   { background: rgba(192, 57, 43, 0.1); color: $color-error; border: 1px solid rgba(192, 57, 43, 0.4); }
+  &.payRefunded { background: $color-bg-alt; color: $color-text-muted; border: 1px solid $color-border-strong; }
+}
+
+.retryBtn {
+  @include mag-cta($bg: $color-error);
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.refundedNote {
+  margin-top: 0.85rem;
+  padding: 0.7rem 0.95rem;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-md;
+  font-family: $font-body;
+  font-size: 0.82rem;
+  color: $color-text-muted;
+}
+
+.back {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-text-muted;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary;
+  }
+}

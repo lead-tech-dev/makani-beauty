@@ -1,0 +1,281 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.page {
+  background: $color-bg;
+  color: $color-secondary;
+}
+
+// ── Masthead ─────────────────────────────────────────────────────
+.masthead {
+  position: relative;
+  border-bottom: 1px solid $color-secondary;
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -10vw;
+    right: -10vw;
+    width: 36vw;
+    height: 36vw;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(230, 167, 80, 0.4),
+      transparent 70%
+    );
+    z-index: 0;
+  }
+}
+
+.mastheadInner {
+  position: relative;
+  z-index: 1;
+  @include mag-container;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.issue {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-bg;
+  background: $color-secondary;
+  padding: 0.3rem 0.55rem;
+  border-radius: $radius-full;
+}
+
+.label {
+  font-family: $font-body;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+}
+
+.title {
+  @include mag-title(clamp(2.6rem, 7vw, 5.4rem));
+  margin: 0;
+  max-width: 18ch;
+}
+
+.lede {
+  font-family: $font-body;
+  font-size: clamp(0.88rem, 1vw, 0.96rem);
+  line-height: 1.7;
+  color: $color-text-muted;
+  max-width: 38rem;
+  margin: 0;
+  @include mag-drop-initial;
+}
+
+// ── Section heads ────────────────────────────────────────────────
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-bottom: 1.4rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid $color-secondary;
+}
+
+.sectionEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.sectionHeadRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  @include mag-title(clamp(1.8rem, 4.2vw, 3rem));
+  font-style: italic;
+  margin: 0;
+}
+
+.count {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  color: $color-secondary;
+  letter-spacing: -0.01em;
+
+  span {
+    font-family: $font-mono;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    margin-left: 0.4rem;
+  }
+}
+
+// ── Categories grid ──────────────────────────────────────────────
+.categories {
+  @include mag-container;
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.6rem);
+  padding-bottom: 2.5rem;
+}
+
+.catCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+
+    .catImg img {
+      transform: scale(1.06);
+    }
+
+    .catCta {
+      color: $color-primary;
+
+      svg {
+        transform: translate(2px, -2px);
+      }
+    }
+  }
+}
+
+.catNumber {
+  position: absolute;
+  top: -0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+  font-family: $font-mono;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: $color-secondary;
+  background: $color-bg;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid $color-secondary;
+  border-radius: $radius-full;
+  transform: rotate(-4deg);
+}
+
+.catImg {
+  @include mag-arch;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  margin-bottom: 1rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s $ease-out;
+  }
+}
+
+.catBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0 0.2rem;
+
+  h3 {
+    font-family: $font-heading;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+    line-height: 1.15;
+    color: $color-secondary;
+    margin: 0;
+  }
+
+  p {
+    font-family: $font-body;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: $color-text-muted;
+    margin: 0;
+  }
+}
+
+.catCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-secondary;
+  transition: color $transition-base;
+
+  svg {
+    transition: transform $transition-base;
+  }
+}
+
+// ── All products section ─────────────────────────────────────────
+.allProducts {
+  position: relative;
+  background: $color-bg-alt;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 3rem);
+  border-top: 1px solid $color-border-strong;
+
+  > * {
+    @include mag-container;
+  }
+
+  > .grid {
+    max-width: $container-max;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: clamp(1.5rem, 2vw, 2rem) clamp(1rem, 1.4vw, 1.4rem);
+  padding-bottom: 4rem;
+}
+
+.empty {
+  font-family: $font-heading;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: $color-text-muted;
+  text-align: center;
+  padding: 3rem 1rem;
+}

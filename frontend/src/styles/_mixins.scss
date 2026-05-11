@@ -1,0 +1,131 @@
+@use "./variables" as *;
+
+@mixin container($max: $container-max) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+@mixin breakpoint-down($bp) {
+  @media (max-width: $bp) {
+    @content;
+  }
+}
+
+@mixin breakpoint-up($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin heading {
+  font-family: $font-heading;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: $color-text;
+}
+
+@mixin caption {
+  font-family: $font-body;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: $color-text-muted;
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  padding: 0.875rem 1.75rem;
+  border-radius: $radius-sm;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color $transition-base, color $transition-base,
+    transform $transition-base, box-shadow $transition-base;
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $color-primary;
+  color: $color-text-inverse;
+
+  &:hover {
+    background: $color-primary-light;
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: transparent;
+  color: $color-primary;
+  border: 1px solid $color-primary;
+
+  &:hover {
+    background: $color-primary;
+    color: $color-text-inverse;
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background: transparent;
+  color: $color-text;
+  padding: 0.5rem;
+
+  &:hover {
+    color: $color-secondary;
+  }
+}
+
+@mixin card {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+  transition: box-shadow $transition-base, transform $transition-base,
+    border-color $transition-base;
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 3px;
+  }
+}
+
+// Animated underline
+@mixin link-underline($color: currentColor) {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: $color;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s $ease-out;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}

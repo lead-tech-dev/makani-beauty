@@ -1,0 +1,262 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+@use "../styles/magazine" as *;
+
+.card {
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  position: relative;
+
+  &::before {
+    content: "Adresses · № 04";
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+    font-family: $font-mono;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: $color-accent-dark;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.8rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid $color-border;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  @include mag-title(clamp(1.8rem, 3.6vw, 2.6rem));
+  font-style: italic;
+  margin: 0 0 0.4rem;
+}
+
+.sub {
+  font-family: $font-body;
+  font-size: 0.9rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.addBtn {
+  @include mag-cta;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.addressCard {
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  padding: 1.3rem 1.4rem;
+  background: $color-bg-alt;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: $color-secondary;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    strong {
+      font-family: $font-heading;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: $color-secondary;
+    }
+  }
+}
+
+.defaultBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: $color-secondary;
+  color: $color-bg;
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: $radius-full;
+}
+
+.addressBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-family: $font-body;
+  font-size: 0.88rem;
+  color: $color-secondary;
+  line-height: 1.55;
+}
+
+.phone {
+  color: $color-text-muted;
+  font-family: $font-mono;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  margin-top: 0.3rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: $color-bg;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-full;
+  padding: 0.4rem 0.85rem;
+  font-family: $font-body;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-secondary;
+  cursor: pointer;
+  transition: background-color $transition-base, border-color $transition-base, color $transition-base;
+
+  &:hover {
+    background: $color-secondary;
+    border-color: $color-secondary;
+    color: $color-bg;
+  }
+
+  &.danger:hover {
+    background: $color-error;
+    border-color: $color-error;
+    color: $color-bg;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: $color-text-muted;
+
+  svg {
+    color: $color-text-muted;
+    margin-bottom: 1.2rem;
+  }
+
+  h3 {
+    @include mag-title(1.4rem);
+    font-style: italic;
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    font-family: $font-body;
+    margin: 0 0 1.4rem;
+    font-size: 0.9rem;
+  }
+}
+
+// ── Form ─────────────────────────────────────────────────────────
+.form {
+  margin-top: 1.5rem;
+  padding: 1.6rem;
+  background: $color-bg-alt;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-lg;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formTitle {
+  @include mag-title(1.2rem);
+  font-style: italic;
+  margin: 0 0 0.6rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @include breakpoint-down($bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    @include mag-label;
+    margin: 0;
+  }
+
+  input {
+    @include mag-field;
+    border-radius: $radius-md;
+  }
+}
+
+.err {
+  font-family: $font-body;
+  font-size: 0.78rem;
+  color: $color-error;
+  font-weight: 500;
+}
+
+.checkboxField {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  color: $color-secondary;
+  cursor: pointer;
+
+  input {
+    accent-color: $color-primary;
+  }
+}
+
+.formActions {
+  display: flex;
+  gap: 0.55rem;
+  justify-content: flex-end;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.cancelBtn {
+  @include mag-cta-ghost;
+}
+
+.saveBtn {
+  @include mag-cta;
+}

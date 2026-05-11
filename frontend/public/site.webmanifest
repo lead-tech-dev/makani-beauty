@@ -1,0 +1,11 @@
+{
+  "name": "Makani Beauty",
+  "short_name": "Makani",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "theme_color": "#c44d3a",
+  "background_color": "#fbf6ef",
+  "display": "standalone",
+  "start_url": "/"
+}
