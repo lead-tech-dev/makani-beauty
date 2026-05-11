@@ -17,22 +17,28 @@ jobs:
     environment:
       name: production
       url: ${{ vars.PROD_FRONTEND_URL || 'https://makani-cosmetique.com' }}
+    # Map secrets to env vars at job scope — GitHub Actions forbids evaluating
+    # `secrets.X` directly inside step-level `if:` for security reasons.
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      RENDER_PROD_DEPLOY_HOOK: ${{ secrets.RENDER_PROD_DEPLOY_HOOK }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Deploy frontend to Vercel (production)
-        if: ${{ secrets.VERCEL_TOKEN }}
+        if: env.VERCEL_TOKEN != ''
         run: |
-          npx --yes vercel pull --yes --environment=production \
-            --token=${{ secrets.VERCEL_TOKEN }}
-          npx --yes vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-          npx --yes vercel deploy --prebuilt --prod \
-            --token=${{ secrets.VERCEL_TOKEN }}
+          npx --yes vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          npx --yes vercel build --prod --token="$VERCEL_TOKEN"
+          npx --yes vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
         working-directory: frontend
 
       - name: Trigger backend deploy hook (production)
-        if: ${{ secrets.RENDER_PROD_DEPLOY_HOOK }}
-        run: curl -fsSL -X POST "${{ secrets.RENDER_PROD_DEPLOY_HOOK }}"
+        if: env.RENDER_PROD_DEPLOY_HOOK != ''
+        run: curl -fsSL -X POST "$RENDER_PROD_DEPLOY_HOOK"
 
       - name: Wait for backend health
         env:
@@ -57,19 +63,18 @@ jobs:
           chmod +x scripts/smoke.sh
           scripts/smoke.sh "$BASE_URL"
 
-      - uses: getsentry/action-release@v1
-        if: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      - name: Sentry release
+        if: env.SENTRY_AUTH_TOKEN != ''
+        uses: getsentry/action-release@v1
         env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: makani-cosmetique
         with:
           environment: production
           version: ${{ github.ref_name }}
 
       - name: Notify Slack
-        if: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: env.SLACK_WEBHOOK_URL != ''
         run: |
           curl -fsSL -X POST -H 'Content-Type: application/json' \
-            -d '{"text":"🚀 Makani Cosmétique `${{ github.ref_name }}` déployé en prod"}' \
-            "${{ secrets.SLACK_WEBHOOK_URL }}"
+            -d "{\"text\":\"🚀 Makani Cosmétique \`${GITHUB_REF_NAME}\` déployé en prod\"}" \
+            "$SLACK_WEBHOOK_URL"

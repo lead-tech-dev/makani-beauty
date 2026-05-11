@@ -18,24 +18,29 @@ jobs:
       name: staging
       # Override via GitHub var STAGING_FRONTEND_URL once the domain or platform subdomain is known.
       url: ${{ vars.STAGING_FRONTEND_URL || 'https://staging.makani-cosmetique.com' }}
+    # Map secrets to env vars at job scope — GitHub Actions forbids evaluating
+    # `secrets.X` directly inside step-level `if:` for security reasons.
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      RENDER_STAGING_DEPLOY_HOOK: ${{ secrets.RENDER_STAGING_DEPLOY_HOOK }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
     steps:
       - uses: actions/checkout@v4
 
       # Frontend → Vercel preview/staging deployment
       - name: Deploy frontend to Vercel
-        if: ${{ secrets.VERCEL_TOKEN }}
+        if: env.VERCEL_TOKEN != ''
         run: |
-          npx --yes vercel pull --yes --environment=preview \
-            --token=${{ secrets.VERCEL_TOKEN }}
-          npx --yes vercel build --token=${{ secrets.VERCEL_TOKEN }}
-          npx --yes vercel deploy --prebuilt \
-            --token=${{ secrets.VERCEL_TOKEN }}
+          npx --yes vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          npx --yes vercel build --token="$VERCEL_TOKEN"
+          npx --yes vercel deploy --prebuilt --token="$VERCEL_TOKEN"
         working-directory: frontend
 
-      # Backend → Render / Railway / Fly via webhook
+      # Backend → Render / Railway / Fly via webhook (skipped on Koyeb — uses GitHub auto-deploy)
       - name: Trigger backend deploy hook (Render)
-        if: ${{ secrets.RENDER_STAGING_DEPLOY_HOOK }}
-        run: curl -fsSL -X POST "${{ secrets.RENDER_STAGING_DEPLOY_HOOK }}"
+        if: env.RENDER_STAGING_DEPLOY_HOOK != ''
+        run: curl -fsSL -X POST "$RENDER_STAGING_DEPLOY_HOOK"
 
       - name: Wait for backend health
         env:
@@ -60,11 +65,10 @@ jobs:
           scripts/smoke.sh "$BASE_URL"
 
       # Sentry source maps + release tracking
-      - uses: getsentry/action-release@v1
-        if: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      - name: Sentry release
+        if: env.SENTRY_AUTH_TOKEN != ''
+        uses: getsentry/action-release@v1
         env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: makani-cosmetique
         with:
           environment: staging
