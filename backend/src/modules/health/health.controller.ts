@@ -20,9 +20,32 @@ export class HealthController {
 
   constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
+  /**
+   * Liveness probe — must respond fast, ZERO external dependencies.
+   * Render / Koyeb / Fly use this to decide whether the container should keep
+   * running; a slow or flaky upstream (Neon autopause, R2 outage, …) must not
+   * cause the container to be killed and restarted, which would amplify the
+   * outage.
+   */
   @Get()
   @Header('Cache-Control', 'no-store')
-  async check() {
+  liveness() {
+    return {
+      status: 'ok',
+      uptimeSeconds: Math.floor((Date.now() - this.bootedAt.getTime()) / 1000),
+      bootedAt: this.bootedAt.toISOString(),
+      version: process.env.SENTRY_RELEASE ?? 'dev',
+    };
+  }
+
+  /**
+   * Readiness probe — runs the actual DB + filesystem checks. Use this for
+   * monitoring dashboards (UptimeRobot etc.) or for orchestrators that need
+   * to drain traffic when a dep degrades. Returns 503 if any check fails.
+   */
+  @Get('ready')
+  @Header('Cache-Control', 'no-store')
+  async readiness() {
     const checks = {
       db: await this.checkDb(),
       uploads: this.checkUploadsWritable(),
