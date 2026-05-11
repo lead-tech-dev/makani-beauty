@@ -25,7 +25,9 @@ const dataSource = new DataSource({
   username: process.env.DB_USERNAME || 'feeling_user',
   password: process.env.DB_PASSWORD || 'feeling_password',
   database: process.env.DB_NAME || 'feeling_beauty',
-  entities: [Category, Brand, Product, User, PromoCode, ShippingZone, ShippingTier],
+  // Auto-discover entities (same pattern as `getDatabaseConfig`) so adding a
+  // new @Entity never silently breaks the seed.
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: false,
   ssl: seedUseSsl ? { rejectUnauthorized: false } : false,
 });
