@@ -4,11 +4,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "installCommand": "npm install --legacy-peer-deps",
-  "trailingSlash": false,
-  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!static/|favicon|robots|sitemap|manifest|icon-|.*\\.(?:js|css|json|map|png|jpg|jpeg|webp|avif|svg|ico|woff2|webmanifest|txt|xml)$).*)",
       "destination": "/index.html"
     }
   ],
